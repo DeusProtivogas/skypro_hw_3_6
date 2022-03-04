@@ -11,27 +11,13 @@ user_ns = Namespace('users')
 class UsersView(Resource):
     @auth_required
     def get(self):
-        # director = request.args.get("director_id")
-        # genre = request.args.get("genre_id")
-        # year = request.args.get("year")
-        # filters = {
-        #     "director_id": director,
-        #     "genre_id": genre,
-        #     "year": year,
-        # }
-        # all_movies = user_service.get_all(filters)
         all_users = user_service.get_all()
-        for user in all_users:
-            us = UserSchema().dump(user)
-            print(us)
 
         res = UserSchema(many=True).dump(all_users)
         return res, 200
 
     def post(self):
-        print("test")
         req_json = request.json
-        print(req_json)
         user = user_service.create(req_json)
         return f"Created user {user.id}!", 201, {"location": f"/users/{user.id}"}
 

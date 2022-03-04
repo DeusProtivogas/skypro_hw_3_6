@@ -31,7 +31,6 @@ def register_extensions(app):
 
 def create_data(app, db):
     with app.app_context():
-        # db.drop_all()
         User.__table__.drop(db.engine)
         db.create_all()
 
